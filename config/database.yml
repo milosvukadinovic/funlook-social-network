@@ -1,0 +1,18 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: postgres
+  password: pgadmin
+  timeout: 5000
+
+development:
+  <<: *default
+  database: social_network_development_db 
+
+test:
+  <<: *default
+  database: social_network_test_db 
+
+production:
+  database: social_network_prod
