@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_10_084852) do
+ActiveRecord::Schema.define(version: 2019_10_28_172058) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,8 +37,8 @@ ActiveRecord::Schema.define(version: 2019_06_10_084852) do
   end
 
   create_table "comments", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "post_id"
+    t.bigint "user_id"
+    t.bigint "post_id"
     t.text "content"
     t.date "date"
     t.datetime "created_at", null: false
@@ -48,8 +48,8 @@ ActiveRecord::Schema.define(version: 2019_06_10_084852) do
   end
 
   create_table "friendships", force: :cascade do |t|
-    t.integer "user1_id"
-    t.integer "user2_id"
+    t.bigint "user1_id"
+    t.bigint "user2_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "status"
@@ -59,17 +59,16 @@ ActiveRecord::Schema.define(version: 2019_06_10_084852) do
   end
 
   create_table "likes", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "post_id"
+    t.bigint "user_id"
+    t.bigint "post_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["post_id"], name: "index_likes_on_post_id"
-    t.index ["user_id", "post_id"], name: "index_friendships_on_user_id_and_post_id", unique: true
     t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
   create_table "posts", force: :cascade do |t|
-    t.integer "user_id"
+    t.bigint "user_id"
     t.binary "picture"
     t.text "content"
     t.datetime "created_at", null: false
@@ -88,12 +87,16 @@ ActiveRecord::Schema.define(version: 2019_06_10_084852) do
     t.string "provider"
     t.string "uid"
     t.string "photo"
-    t.string "bio"
     t.string "name"
+    t.string "bio"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "comments", "posts"
+  add_foreign_key "comments", "users"
+  add_foreign_key "likes", "posts"
+  add_foreign_key "likes", "users"
+  add_foreign_key "posts", "users"
 end
