@@ -5,7 +5,7 @@ It's a learning exercise set by [The Odin Project](https://www.theodinproject.co
 ![Alt text](/public/ss.jpg)
 
 * Sign up new users (Devise) 
-* Facebook sing up and log in
+* Facebook sign up and log in
 * Make new posts, allow images
 * Like posts
 * Make comments
